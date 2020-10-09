@@ -54,10 +54,11 @@ void matrix_init_user(void) {
 
 // Taken from 'g_led_config' in config_led.c
 #define CAPS_LOCK_LED_ID 30
+#define SPACE_LED_ID 61
 
 // This runs every matrix scan (every 'frame')
 void rgb_matrix_indicators_user(void) {
-    // CapsLock highlight
+    // caps lock highlight
     RGB rgb;
     if (host_keyboard_leds() & (1 << USB_LED_CAPS_LOCK)) {
         if (HAS_FLAGS(rgb_matrix_get_flags(), LED_FLAG_KEYLIGHT)) {
@@ -73,6 +74,9 @@ void rgb_matrix_indicators_user(void) {
         }
     }
     rgb_matrix_set_color(CAPS_LOCK_LED_ID, rgb.r, rgb.g, rgb.b);
+
+    // turn off LED under the space bar
+    rgb_matrix_set_color(SPACE_LED_ID, 0, 0, 0);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
